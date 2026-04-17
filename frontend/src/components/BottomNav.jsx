@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function getTabs(basePath) {
   if (basePath === '/delivery') {
@@ -6,7 +6,6 @@ function getTabs(basePath) {
       { label: 'Home', path: '/delivery/home', icon: 'home' },
       { label: 'Orders', path: '/delivery/orders', icon: 'orders' },
       { label: 'Earnings', path: '/delivery/earnings', icon: 'wallet' },
-      { label: 'Performance', path: '/delivery/performance', icon: 'performance' },
       { label: 'Profile', path: '/delivery/profile', icon: 'profile' },
     ]
   }
@@ -25,7 +24,7 @@ function NavIcon({ name, active }) {
 
   if (name === 'home') {
     return (
-      <svg viewBox="0 0 24 24" fill="none" className="h-[18px] w-[18px]" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
         <path d="M3.75 10.5 12 3.75l8.25 6.75v8.25a1.5 1.5 0 0 1-1.5 1.5h-13.5a1.5 1.5 0 0 1-1.5-1.5V10.5Z" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M9.75 20.25V13.5h4.5v6.75" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
@@ -34,7 +33,7 @@ function NavIcon({ name, active }) {
 
   if (name === 'orders') {
     return (
-      <svg viewBox="0 0 24 24" fill="none" className="h-[18px] w-[18px]" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
         <path d="M6 4.5h12a1.5 1.5 0 0 1 1.5 1.5v12A1.5 1.5 0 0 1 18 19.5H6A1.5 1.5 0 0 1 4.5 18V6A1.5 1.5 0 0 1 6 4.5Z" stroke={color} strokeWidth="1.8" />
         <path d="M8.25 9h7.5M8.25 12h7.5M8.25 15h4.5" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
       </svg>
@@ -43,7 +42,7 @@ function NavIcon({ name, active }) {
 
   if (name === 'products') {
     return (
-      <svg viewBox="0 0 24 24" fill="none" className="h-[18px] w-[18px]" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
         <path d="M12 3.75 4.5 8.25v7.5L12 20.25l7.5-4.5v-7.5L12 3.75Z" stroke={color} strokeWidth="1.8" strokeLinejoin="round" />
         <path d="M12 12.75 4.5 8.25M12 12.75l7.5-4.5M12 12.75v7.5" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
@@ -52,7 +51,7 @@ function NavIcon({ name, active }) {
 
   if (name === 'wallet') {
     return (
-      <svg viewBox="0 0 24 24" fill="none" className="h-[18px] w-[18px]" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
         <path d="M4.5 7.5A2.25 2.25 0 0 1 6.75 5.25h10.5A2.25 2.25 0 0 1 19.5 7.5v9a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 16.5v-9Z" stroke={color} strokeWidth="1.8" />
         <path d="M15.75 12h3.75" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
         <circle cx="15.75" cy="12" r="0.9" fill={color} />
@@ -62,7 +61,7 @@ function NavIcon({ name, active }) {
 
   if (name === 'performance') {
     return (
-      <svg viewBox="0 0 24 24" fill="none" className="h-[18px] w-[18px]" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
         <path d="M4.5 18.75h15" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
         <path d="M7.5 15.75 10.5 12.75l2.25 2.25L16.5 9.75" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
         <circle cx="7.5" cy="15.75" r="1" fill={color} />
@@ -74,7 +73,7 @@ function NavIcon({ name, active }) {
   }
 
   return (
-    <svg viewBox="0 0 24 24" fill="none" className="h-[18px] w-[18px]" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
       <circle cx="12" cy="8.25" r="3" stroke={color} strokeWidth="1.8" />
       <path d="M5.25 19.5a6.75 6.75 0 0 1 13.5 0" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
     </svg>
@@ -82,63 +81,59 @@ function NavIcon({ name, active }) {
 }
 
 function BottomNav() {
-  const location = useLocation()
-  const isDeliveryRoute = location.pathname.startsWith('/delivery')
-  const basePath = isDeliveryRoute ? '/delivery' : '/retailer'
-  const tabs = getTabs(basePath)
-  const activeIndex = tabs.findIndex((tab) => tab.path === location.pathname)
-  const safeIndex = activeIndex >= 0 ? activeIndex : 0
-  const activeIcon = tabs[safeIndex]?.icon ?? tabs[0].icon
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isDeliveryRoute = location.pathname.startsWith('/delivery');
+  const basePath = isDeliveryRoute ? '/delivery' : '/retailer';
+  const tabs = getTabs(basePath);
+  const activeIndex = tabs.findIndex((tab) => tab.path === location.pathname);
+  const safeIndex = activeIndex >= 0 ? activeIndex : 0;
+  const activeIcon = tabs[safeIndex]?.icon ?? tabs[0].icon;
 
   return (
-    <nav className="fixed bottom-4 left-1/2 z-50 w-[94%] max-w-md -translate-x-1/2 rounded-[38px] border border-white/80 bg-white/95 px-2 py-2 shadow-[0_14px_30px_rgba(0,0,0,0.12)] backdrop-blur-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
-      <ul className="relative grid grid-cols-5 items-end gap-0">
+    <nav className="fixed bottom-2 left-1/2 z-50 w-[95%] max-w-lg -translate-x-1/2 rounded-3xl border border-white/80 bg-white/95 px-4 py-2 shadow-[0_8px_24px_rgba(0,0,0,0.13)] backdrop-blur-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
+      <ul className="relative grid grid-cols-4 items-end gap-0">
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute left-0 top-[13px] z-0 flex h-[44px] w-1/5 items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          className="pointer-events-none absolute left-0 top-2 z-0 flex h-12 w-1/4 items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
           style={{ transform: `translateX(${safeIndex * 100}%)` }}
         >
-          <span className="grid h-11 w-11 place-items-center rounded-full bg-[#00A877] text-white shadow-[0_8px_18px_rgba(0,168,119,0.35)]">
+          <span className="grid h-12 w-12 place-items-center rounded-full bg-black text-white shadow-[0_4px_16px_rgba(0,0,0,0.18)]">
             <NavIcon name={activeIcon} active={true} />
           </span>
         </span>
 
         {tabs.map((tab) => (
           <li key={tab.path} className="flex-1">
-            <NavLink
-              to={tab.path}
-              className={({ isActive }) =>
-                `relative flex min-h-[70px] flex-col items-center justify-end rounded-2xl pb-1 text-[11px] font-semibold transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  isActive ? 'text-[#00A877]' : 'text-[#6b7280]'
-                }`
-              }
+            <button
+              type="button"
+              onClick={() => navigate(tab.path)}
+              className={`relative flex min-h-16 w-full flex-col items-center justify-end rounded-2xl pb-1 text-xs font-semibold transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                location.pathname === tab.path ? 'text-black' : 'text-[#6b7280]'
+              }`}
             >
-              {({ isActive }) => (
-                <>
-                  <span
-                    className={`relative z-10 mb-2 grid h-11 w-11 place-items-center rounded-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                      isActive
-                        ? 'scale-100 opacity-0'
-                        : 'scale-[0.94] bg-transparent text-[#8b949e]'
-                    }`}
-                  >
-                    <NavIcon name={tab.icon} active={isActive} />
-                  </span>
-                  <span
-                    className={`leading-none transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                      isActive ? 'translate-y-0 opacity-100' : 'translate-y-[1px] opacity-90'
-                    }`}
-                  >
-                    {tab.label}
-                  </span>
-                </>
-              )}
-            </NavLink>
+              <span
+                className={`relative z-10 mb-1 grid h-10 w-10 place-items-center rounded-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  location.pathname === tab.path
+                    ? 'scale-100 opacity-0'
+                    : 'scale-[0.92] bg-transparent text-[#8b949e]'
+                }`}
+              >
+                <NavIcon name={tab.icon} active={location.pathname === tab.path} />
+              </span>
+              <span
+                className={`leading-none transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  location.pathname === tab.path ? 'translate-y-0 opacity-100' : 'translate-y-px opacity-90'
+                }`}
+              >
+                {tab.label}
+              </span>
+            </button>
           </li>
         ))}
       </ul>
     </nav>
-  )
+  );
 }
 
 export default BottomNav

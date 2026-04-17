@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+}
+
 :root {
   --brand-start: #00a877;
   --brand-end: #008f67;
@@ -51,12 +57,12 @@ body {
   }
 
   .brand-gradient {
-    @apply bg-gradient-to-r from-[#00a877] to-[#008f67];
+    @apply bg-gradient-to-r from-[#00a877] to-[#008f67]; /* If error persists, use bg-linear-to-r or update Tailwind config */
   }
 
   .primary-btn {
     border-radius: var(--radius-base);
-    @apply w-full bg-gradient-to-r from-[#00a877] to-[#008f67] px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(0,168,119,0.28)] transition-all duration-200 active:scale-[0.98];
+    @apply w-full bg-gradient-to-r from-[#00a877] to-[#008f67] px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(0,168,119,0.28)] transition-all duration-200 active:scale-[0.98]; /* If error persists, use bg-linear-to-r or update Tailwind config */
   }
 
   .input-field {

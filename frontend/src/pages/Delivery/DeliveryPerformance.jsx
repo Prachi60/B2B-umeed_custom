@@ -49,7 +49,7 @@ function DeliveryPerformance() {
               <span>{dailyProgress}%</span>
             </div>
             <div className="h-2.5 rounded-full bg-slate-100">
-              <div className="h-full rounded-full bg-emerald-500" style={{ width: `${dailyProgress}%` }} />
+              <div className="h-full rounded-full bg-black" style={{ width: `${dailyProgress}%` }} />
             </div>
           </div>
 
@@ -59,7 +59,7 @@ function DeliveryPerformance() {
               <span>{monthlyProgress}%</span>
             </div>
             <div className="h-2.5 rounded-full bg-slate-100">
-              <div className="h-full rounded-full bg-[#00A877]" style={{ width: `${monthlyProgress}%` }} />
+              <div className="h-full rounded-full bg-black" style={{ width: `${monthlyProgress}%` }} />
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@ function DeliveryPerformance() {
               <div key={item.day} className="grid grid-cols-[42px_1fr_70px] items-center gap-2 text-sm">
                 <span className="font-medium text-slate-700">{item.day}</span>
                 <div className="h-2.5 rounded-full bg-slate-100">
-                  <div className="h-full rounded-full bg-emerald-500" style={{ width: `${Math.min(100, width)}%` }} />
+                  <div className="h-full rounded-full bg-black" style={{ width: `${Math.min(100, width)}%` }} />
                 </div>
                 <span className="text-right font-semibold text-slate-800">Rs {item.earning}</span>
               </div>
@@ -84,9 +84,9 @@ function DeliveryPerformance() {
           })}
         </div>
 
-        <div className="mt-4 rounded-xl bg-emerald-50 p-3 text-sm">
-          <p className="font-medium text-emerald-800">Weekly Total</p>
-          <p className="mt-1 text-lg font-semibold text-emerald-900">Rs {weekTotal.toLocaleString('en-IN')}</p>
+        <div className="mt-4 rounded-xl bg-slate-100 p-3 text-sm">
+          <p className="font-medium text-slate-800">Weekly Total</p>
+          <p className="mt-1 text-lg font-semibold text-slate-900">Rs {weekTotal.toLocaleString('en-IN')}</p>
         </div>
       </Card>
     </div>

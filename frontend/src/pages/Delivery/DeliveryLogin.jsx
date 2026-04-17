@@ -28,10 +28,10 @@ function DeliveryLogin() {
 
   return (
     <div className="screen-shell flex min-h-dvh flex-col overflow-x-hidden pb-8 pt-4">
-      <section className="brand-gradient rounded-2xl px-5 pb-12 pt-9 text-white shadow-[0_10px_24px_rgba(0,168,119,0.24)]">
-        <p className="text-xs uppercase tracking-[0.22em] text-[#d6f5ea]">Delivery Portal</p>
-        <h1 className="mt-2 text-[30px] font-semibold leading-tight tracking-[-0.01em]">Umeed Delivery</h1>
-        <p className="mt-2 max-w-[30ch] text-sm leading-relaxed text-[#d6f5ea]">
+      <section className="bg-black rounded-2xl px-5 pb-10 pt-9 text-white shadow-xl">
+        <p className="text-xs uppercase tracking-[0.22em] text-gray-400 font-semibold">Delivery Portal</p>
+        <h1 className="mt-2 text-[30px] font-bold leading-tight tracking-[-0.01em]">Umeed Delivery</h1>
+        <p className="mt-2 max-w-[30ch] text-sm leading-relaxed text-gray-400">
           Login to manage assigned orders, delivery status, and your daily earnings.
         </p>
       </section>
@@ -52,7 +52,7 @@ function DeliveryLogin() {
               placeholder="partner@umeed.com"
               value={credentials.email}
               onChange={handleChange}
-              className="input-field"
+              className="input-field focus:border-black focus:ring-slate-200"
               autoComplete="email"
               required
             />
@@ -69,14 +69,14 @@ function DeliveryLogin() {
               placeholder="Enter your password"
               value={credentials.password}
               onChange={handleChange}
-              className="input-field"
+              className="input-field focus:border-black focus:ring-slate-200"
               autoComplete="current-password"
               required
             />
           </div>
 
-          <button type="submit" className="primary-btn">
-            Login to Delivery App
+          <button type="submit" className="w-full bg-black py-3.5 rounded-2xl text-white font-bold text-sm shadow-lg active:scale-[0.98] transition-all">
+            Login to Delivery Partner App
           </button>
         </form>
       </section>

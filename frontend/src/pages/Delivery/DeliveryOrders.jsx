@@ -5,7 +5,7 @@ import { deliveryOrders } from '../../data/deliveryData'
 
 function getStatusBadge(status) {
   if (status === 'Delivered') {
-    return 'bg-emerald-100 text-emerald-700'
+    return 'bg-slate-100 text-slate-700'
   }
 
   if (status === 'Picked') {
@@ -49,27 +49,27 @@ function DeliveryOrders() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="screen-shell space-y-4 mt-4">
       <Header title="Delivery Orders" subtitle="Accept/reject, navigate route, and update live status" />
 
       <Card>
-        <div className="flex items-center justify-between rounded-xl bg-emerald-50 px-3 py-2.5">
-          <p className="text-sm font-medium text-emerald-800">Pending decisions</p>
-          <span className="rounded-full bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white">{pendingCount}</span>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-xl bg-slate-100 px-3 py-2.5 gap-2 sm:gap-0">
+          <p className="text-sm font-medium text-slate-800">Pending decisions</p>
+          <span className="rounded-full bg-black px-2.5 py-1 text-xs font-semibold text-white">{pendingCount}</span>
         </div>
       </Card>
 
       <div className="space-y-3">
         {orders.map((order) => (
-          <Card key={order.id} className="p-4">
-            <div className="flex items-start justify-between gap-3">
+          <Card key={order.id} className="p-3 sm:p-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
               <div>
                 <p className="text-sm font-semibold text-slate-900">{order.customerName}</p>
                 <p className="mt-1 text-xs text-slate-500">Order ID: {order.orderId}</p>
                 <p className="mt-1 text-xs text-slate-500">{order.customerPhone}</p>
                 <p className="mt-1 text-xs text-slate-600">{order.address}</p>
               </div>
-              <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${getStatusBadge(order.status)}`}>
+              <span className={`mt-2 sm:mt-0 rounded-full px-2.5 py-1 text-xs font-semibold ${getStatusBadge(order.status)}`}>
                 {order.status}
               </span>
             </div>
@@ -85,12 +85,12 @@ function DeliveryOrders() {
               </div>
             </div>
 
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-3 flex flex-wrap gap-2 w-full">
               <button
                 type="button"
                 onClick={() => handleDecision(order.id, 'Accepted')}
                 disabled={order.decision === 'Rejected' || order.status === 'Delivered'}
-                className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex-1 min-w-24 rounded-lg bg-black px-3 py-1.5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Accept
               </button>
@@ -98,25 +98,25 @@ function DeliveryOrders() {
                 type="button"
                 onClick={() => handleDecision(order.id, 'Rejected')}
                 disabled={order.decision === 'Accepted' || order.status === 'Delivered'}
-                className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex-1 min-w-24 rounded-lg border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Reject
               </button>
               <button
                 type="button"
                 onClick={() => openRoute(order.address)}
-                className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700"
+                className="flex-1 min-w-32 rounded-lg border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700"
               >
                 Route Navigation
               </button>
             </div>
 
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-3 flex flex-wrap gap-2 w-full">
               <button
                 type="button"
                 onClick={() => updateStatus(order.id, 'Picked')}
                 disabled={order.decision !== 'Accepted' || order.status === 'Delivered'}
-                className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex-1 min-w-32 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Mark Picked
               </button>
@@ -124,7 +124,7 @@ function DeliveryOrders() {
                 type="button"
                 onClick={() => updateStatus(order.id, 'Delivered')}
                 disabled={order.decision !== 'Accepted' || order.status !== 'Picked'}
-                className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex-1 min-w-32 rounded-lg border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Mark Delivered
               </button>

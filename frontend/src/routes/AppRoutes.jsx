@@ -43,7 +43,10 @@ function AppRoutes() {
 
       <Route path="/retailer/auth" element={<Login />} />
       <Route path="/retailer/signup" element={<Signup />} />
-      <Route path="/delivery/auth" element={<DeliveryLogin />} />
+
+      {/* Delivery Auth Routes */}
+      <Route path="/delivery/auth/*" element={<DeliveryLogin />} />
+
 
       <Route path="/retailer" element={<MainLayout />}>
         <Route index element={<Navigate to="/retailer/home" replace />} />
@@ -57,6 +60,7 @@ function AppRoutes() {
         <Route path="cart" element={<Cart />} />
       </Route>
 
+      {/* Delivery Protected Routes */}
       <Route
         path="/delivery"
         element={
@@ -75,7 +79,7 @@ function AppRoutes() {
 
       <Route path="*" element={<Navigate to="/retailer/auth" replace />} />
     </Routes>
-  )
+  );
 }
 
-export default AppRoutes
+export default AppRoutes;

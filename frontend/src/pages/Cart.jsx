@@ -1,5 +1,4 @@
-import Card from '../components/Card'
-import Header from '../components/Header'
+import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Package } from 'lucide-react'
 import useCart from '../hooks/useCart'
 
 function formatCurrency(value) {
@@ -10,73 +9,75 @@ function Cart() {
   const { cartItems, totalPrice, increaseQuantity, decreaseQuantity, removeItem } = useCart()
 
   return (
-    <div className="space-y-4 pb-2">
-      <Header title="Cart" subtitle="Review items before checkout" />
+    <div className="px-4 pt-2 flex flex-col h-full bg-[#F8FAFC]">
+      <header className="mb-4">
+        <h1 className="text-xl font-bold text-[#0F172A] tracking-tight">Cart</h1>
+        <p className="text-[11px] text-slate-400 font-medium">{cartItems.length} items in your list</p>
+      </header>
 
       {cartItems.length === 0 ? (
-        <Card className="p-5 text-center">
-          <p className="text-sm font-medium text-[#111827]">Your cart is empty</p>
-          <p className="mt-1 text-xs text-[#6b7280]">Add products from Home to create your order.</p>
-        </Card>
+        <div className="flex-1 flex flex-col items-center justify-center py-20 text-center">
+          <div className="h-16 w-16 bg-slate-100 rounded-full grid place-items-center text-slate-300 mb-4">
+            <ShoppingBag size={24} />
+          </div>
+          <h2 className="text-base font-bold text-slate-800">Your cart is empty</h2>
+          <button className="mt-4 text-xs font-black text-black uppercase tracking-widest underline decoration-2 underline-offset-4">
+            Browse Products
+          </button>
+        </div>
       ) : (
-        <>
-          <Card className="p-4">
-            <h3 className="section-title">Cart Items</h3>
-            <div className="mt-3 space-y-3">
-              {cartItems.map((item) => (
-                <article key={item.id} className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold text-[#111827]">{item.name}</p>
-                      <p className="mt-1 text-xs text-[#6b7280]">{formatCurrency(item.price)} each</p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => removeItem(item.id)}
-                      className="rounded-full border border-rose-200 px-2 py-1 text-[11px] font-semibold text-rose-600 transition hover:bg-rose-50"
-                    >
-                      Remove
+        <div className="flex-1 overflow-y-auto pb-10 space-y-2">
+          {/* COMPACT ITEMS LIST */}
+          {cartItems.map((item) => (
+            <div key={item.id} className="bg-white rounded-xl p-2 border border-slate-100 flex items-center gap-3">
+              <div className="h-14 w-14 bg-slate-50 rounded-lg overflow-hidden shrink-0 grid place-items-center">
+                {item.image ? (
+                  <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                ) : (
+                  <Package className="text-slate-200" size={20} />
+                )}
+              </div>
+
+              <div className="flex-1 min-w-0 flex flex-col justify-between h-14">
+                <div className="flex items-start justify-between">
+                  <h3 className="text-[11px] font-bold text-[#0F172A] truncate pr-1 uppercase tracking-tight">{item.name}</h3>
+                  <button onClick={() => removeItem(item.id)} className="text-rose-400 p-1 active:scale-75 transition-transform">
+                    <Trash2 size={12} />
+                  </button>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-black text-black">{formatCurrency(item.price)}</span>
+                  <div className="flex items-center bg-slate-100 rounded-lg p-0.5 gap-2">
+                    <button onClick={() => decreaseQuantity(item.id)} className="h-5 w-5 bg-white rounded-md grid place-items-center text-black active:scale-90 transition-transform">
+                      <Minus size={10} strokeWidth={4} />
+                    </button>
+                    <span className="text-[10px] font-black text-black">{item.quantity}</span>
+                    <button onClick={() => increaseQuantity(item.id)} className="h-5 w-5 bg-white rounded-md grid place-items-center text-black active:scale-90 transition-transform">
+                      <Plus size={10} strokeWidth={4} />
                     </button>
                   </div>
-
-                  <div className="mt-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => decreaseQuantity(item.id)}
-                        className="h-7 w-7 rounded-full border border-slate-300 bg-white text-sm font-semibold text-slate-700 transition active:scale-95"
-                        aria-label={`Decrease quantity of ${item.name}`}
-                      >
-                        -
-                      </button>
-                      <span className="min-w-6 text-center text-sm font-semibold text-[#111827]">{item.quantity}</span>
-                      <button
-                        type="button"
-                        onClick={() => increaseQuantity(item.id)}
-                        className="h-7 w-7 rounded-full border border-slate-300 bg-white text-sm font-semibold text-slate-700 transition active:scale-95"
-                        aria-label={`Increase quantity of ${item.name}`}
-                      >
-                        +
-                      </button>
-                    </div>
-
-                    <p className="text-sm font-semibold text-[#008f67]">{formatCurrency(item.price * item.quantity)}</p>
-                  </div>
-                </article>
-              ))}
+                </div>
+              </div>
             </div>
-          </Card>
+          ))}
+        </div>
+      )}
 
-          <Card className="p-4">
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-[#6b7280]">Total Price</p>
-              <p className="text-lg font-semibold tracking-[-0.01em] text-[#111827]">{formatCurrency(totalPrice)}</p>
+      {/* COMPACT STICKY CHECKOUT - MINIMAL VERSION */}
+      {cartItems.length > 0 && (
+        <div className="fixed bottom-[96px] left-4 right-4 z-40">
+          <div className="bg-black text-white rounded-2xl p-4 shadow-xl flex items-center justify-between">
+            <div className="flex flex-col">
+              <span className="text-[8px] font-black text-white/40 uppercase tracking-[0.2em] mb-0.5">Payable Amount</span>
+              <span className="text-lg font-black tracking-tight">{formatCurrency(totalPrice)}</span>
             </div>
-            <button type="button" className="primary-btn mt-4">
-              Proceed to Checkout
+            <button className="h-11 px-6 bg-white text-black rounded-xl font-black text-[10px] uppercase tracking-[0.15em] flex items-center gap-2 active:scale-95 transition-all">
+              Checkout
+              <ArrowRight size={14} strokeWidth={3} />
             </button>
-          </Card>
-        </>
+          </div>
+        </div>
       )}
     </div>
   )

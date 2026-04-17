@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { LogIn, ArrowRight, ShieldCheck } from 'lucide-react'
 
 function Login() {
   const [form, setForm] = useState({ email: '', password: '' })
@@ -13,78 +14,91 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-
-    if (!form.email.trim() || !form.password.trim()) {
-      return
-    }
-
+    if (!form.email.trim() || !form.password.trim()) return
     setSubmitting(true)
     setTimeout(() => {
       setSubmitting(false)
       navigate('/retailer/home')
-    }, 500)
+    }, 800)
   }
 
   return (
-    <div className="screen-shell flex min-h-dvh flex-col overflow-x-hidden pb-8 pt-4">
-      <section className="brand-gradient rounded-2xl px-5 pb-12 pt-9 text-white shadow-[0_10px_24px_rgba(0,168,119,0.24)]">
-        <p className="text-xs uppercase tracking-[0.22em] text-[#d6f5ea]">Retailer Portal</p>
-        <h1 className="mt-2 text-[30px] font-semibold leading-tight tracking-[-0.01em]">Umeed Retailers</h1>
-        <p className="mt-2 max-w-[24ch] text-sm leading-relaxed text-[#d6f5ea]">
-          Login to place wholesale orders, track deliveries, and manage your store wallet.
-        </p>
+    <div className="flex min-h-dvh flex-col bg-[#F8FAFC]">
+      {/* HEADER HERO */}
+      <section className="bg-[#0F172A] rounded-b-[40px] px-6 pb-16 pt-12 text-white relative overflow-hidden shadow-2xl">
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 mb-4">
+             <div className="h-10 w-10 bg-white/10 rounded-xl grid place-items-center backdrop-blur-md border border-white/10">
+               <LogIn size={20} />
+             </div>
+             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">Retailer Portal</span>
+          </div>
+          <h1 className="text-4xl font-black leading-tight tracking-tighter">Umeed Retailers</h1>
+          <p className="mt-4 max-w-[28ch] text-sm font-medium text-slate-400 leading-relaxed">
+            Wholesale ordering platform for local stores and supermarkets.
+          </p>
+        </div>
+        <ShieldCheck className="absolute -right-8 -bottom-8 text-white/5 w-48 h-48 -rotate-12" />
       </section>
 
-      <section className="card-surface -mt-8 p-5">
-        <h2 className="text-lg font-semibold text-slate-900">Welcome Back</h2>
-        <p className="mt-1 text-sm text-slate-500">Sign in to continue</p>
-
-        <form className="mt-5 space-y-4" onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email" className="mb-2 block text-xs font-medium text-slate-600">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="owner@shop.com"
-              value={form.email}
-              onChange={handleChange}
-              className="input-field"
-              autoComplete="email"
-              required
-            />
+      {/* FORM SECTION */}
+      <section className="flex-1 px-6 pt-8 pb-10">
+        <div className="bg-white rounded-[32px] p-6 shadow-sm border border-slate-50 -mt-12 relative z-20">
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-[#0F172A]">Welcome Back</h2>
+            <p className="text-sm text-slate-400 font-medium">Sign in to your account</p>
           </div>
 
-          <div>
-            <label htmlFor="password" className="mb-2 block text-xs font-medium text-slate-600">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter your password"
-              value={form.password}
-              onChange={handleChange}
-              className="input-field"
-              autoComplete="current-password"
-              required
-            />
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="space-y-2">
+              <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Email Account</label>
+              <input
+                name="email"
+                type="email"
+                placeholder="store.manager@shop.com"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full h-14 px-4 bg-slate-50 rounded-2xl border border-slate-100 outline-none focus:border-black focus:ring-4 focus:ring-slate-100 transition-all font-medium text-sm"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Access Password</label>
+              <input
+                name="password"
+                type="password"
+                placeholder="••••••••"
+                value={form.password}
+                onChange={handleChange}
+                className="w-full h-14 px-4 bg-slate-50 rounded-2xl border border-slate-100 outline-none focus:border-black focus:ring-4 focus:ring-slate-100 transition-all font-medium text-sm"
+                required
+              />
+            </div>
+
+            <div className="flex justify-end">
+              <button type="button" className="text-xs font-bold text-black border-b border-black/10">Forgot Password?</button>
+            </div>
+
+            <button 
+              type="submit" 
+              className="w-full h-14 bg-black text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 active:scale-[0.98] transition-all shadow-xl shadow-black/10 disabled:opacity-70"
+              disabled={submitting}
+            >
+              {submitting ? 'Verifying...' : 'Login Securely'}
+              {!submitting && <ArrowRight size={18} />}
+            </button>
+          </form>
+
+          <div className="mt-8 text-center pt-8 border-t border-slate-50">
+            <p className="text-sm font-medium text-slate-500">
+              New retailer?{' '}
+              <Link to="/retailer/signup" className="font-extrabold text-black hover:underline underline-offset-4">
+                Join Network
+              </Link>
+            </p>
           </div>
-
-          <button type="submit" className="primary-btn" disabled={submitting}>
-            {submitting ? 'Logging in...' : 'Login'}
-          </button>
-        </form>
-
-        <p className="mt-5 text-center text-sm text-slate-500">
-          New retailer?{' '}
-          <Link to="/retailer/signup" className="font-semibold text-[#008f67] underline-offset-2 hover:underline">
-            Create account
-          </Link>
-        </p>
+        </div>
       </section>
     </div>
   )
