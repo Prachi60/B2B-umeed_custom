@@ -13,7 +13,6 @@ function getTabs(basePath) {
   return [
     { label: 'Home', path: `${basePath}/home`, icon: 'home' },
     { label: 'Orders', path: `${basePath}/orders`, icon: 'orders' },
-    { label: 'Products', path: `${basePath}/products`, icon: 'products' },
     { label: 'Wallet', path: `${basePath}/wallet`, icon: 'wallet' },
     { label: 'Profile', path: `${basePath}/profile`, icon: 'profile' },
   ]
@@ -92,11 +91,17 @@ function BottomNav() {
 
   return (
     <nav className="fixed bottom-2 left-1/2 z-50 w-[95%] max-w-lg -translate-x-1/2 rounded-3xl border border-white/80 bg-white/95 px-4 py-2 shadow-[0_8px_24px_rgba(0,0,0,0.13)] backdrop-blur-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
-      <ul className="relative grid grid-cols-4 items-end gap-0">
+      <ul
+        className="relative grid items-end gap-0"
+        style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
+      >
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute left-0 top-2 z-0 flex h-12 w-1/4 items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-          style={{ transform: `translateX(${safeIndex * 100}%)` }}
+          className="pointer-events-none absolute left-0 top-2 z-0 flex h-12 items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          style={{
+            transform: `translateX(${safeIndex * 100}%)`,
+            width: `${100 / tabs.length}%`,
+          }}
         >
           <span className="grid h-12 w-12 place-items-center rounded-full bg-black text-white shadow-[0_4px_16px_rgba(0,0,0,0.18)]">
             <NavIcon name={activeIcon} active={true} />
