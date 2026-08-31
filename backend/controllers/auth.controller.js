@@ -320,7 +320,7 @@ export const createAdminRetailer = async (req, res) => {
 
     // Phone validation (exactly 10 digits if provided)
     let cleanedPhone = '';
-    if (phone) {
+    if (phone && phone.trim() !== '') {
       cleanedPhone = phone.trim();
       if (!/^\d{10}$/.test(cleanedPhone)) {
         return res.status(400).json({ message: 'Phone number must be exactly 10 digits' });
@@ -438,7 +438,7 @@ export const updateAdminRetailer = async (req, res) => {
     }
 
     // Phone validation (if provided)
-    if (phone) {
+    if (phone && phone.trim() !== '') {
       const cleanedPhone = phone.trim();
       if (!/^\d{10}$/.test(cleanedPhone)) {
         return res.status(400).json({ message: 'Phone number must be exactly 10 digits' });
