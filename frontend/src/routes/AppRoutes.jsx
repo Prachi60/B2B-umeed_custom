@@ -27,6 +27,7 @@ import DeliveryOrders from '../pages/Delivery/DeliveryOrders'
 import DeliveryEarnings from '../pages/Delivery/DeliveryEarnings'
 import DeliveryPerformance from '../pages/Delivery/DeliveryPerformance'
 import NotificationListener from '../components/NotificationListener'
+import Invoice from '../pages/Invoice'
 
 function AppRoutes() {
   return (
@@ -34,6 +35,7 @@ function AppRoutes() {
       <NotificationListener />
       <Routes>
       <Route path="/" element={<SmartRedirect />} />
+      <Route path="/invoice/:id" element={<Invoice />} />
       <Route path="/admin/auth" element={<AdminAuthRoute />} />
 
       <Route

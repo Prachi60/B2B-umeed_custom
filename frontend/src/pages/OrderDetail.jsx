@@ -1,7 +1,7 @@
 import { getBackendUrl, getImageUrl } from '../utils/api';
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Package, Clock, MapPin, CreditCard, Truck } from 'lucide-react'
+import { ArrowLeft, Package, Clock, MapPin, CreditCard, Truck, Printer } from 'lucide-react'
 
 
 
@@ -78,17 +78,34 @@ function OrderDetail() {
   return (
     <div className="pb-32 px-4 pt-4 bg-[#F8FAFC] min-h-screen">
       {/* HEADER */}
-      <header className="flex items-center gap-4 mb-8">
-        <button
-          onClick={() => navigate('/retailer/orders')}
-          className="h-12 w-12 grid place-items-center bg-white rounded-2xl shadow-sm border border-slate-100 active:scale-95 transition-all"
-        >
-          <ArrowLeft size={20} className="text-slate-600" />
-        </button>
-        <div>
-          <h1 className="text-2xl font-extrabold text-[#0F172A] tracking-tight">Order Details</h1>
-          <p className="text-xs text-slate-500 font-medium mt-0.5">#{orderId}</p>
+      <header className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate('/retailer/orders')}
+            className="h-12 w-12 grid place-items-center bg-white rounded-2xl shadow-sm border border-slate-100 active:scale-95 transition-all"
+          >
+            <ArrowLeft size={20} className="text-slate-600" />
+          </button>
+          <div>
+            <h1 className="text-2xl font-extrabold text-[#0F172A] tracking-tight">Order Details</h1>
+            <p className="text-xs text-slate-500 font-medium mt-0.5">#{orderId}</p>
+          </div>
         </div>
+        
+        <button
+          onClick={() => window.open(`/invoice/${order._id}`, '_blank')}
+          className="hidden sm:flex px-4 py-2 bg-[#00a877] text-white rounded-xl text-sm font-bold shadow-md hover:bg-emerald-600 active:scale-95 transition-all items-center gap-2"
+        >
+          <Printer size={16} />
+          Print / Download Bill
+        </button>
+        {/* Mobile icon only */}
+        <button
+          onClick={() => window.open(`/invoice/${order._id}`, '_blank')}
+          className="sm:hidden h-12 w-12 grid place-items-center bg-[#00a877] text-white rounded-2xl shadow-sm active:scale-95 transition-all"
+        >
+          <Printer size={20} />
+        </button>
       </header>
 
       {/* ORDER STATUS CARD */}

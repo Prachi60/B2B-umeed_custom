@@ -13,7 +13,7 @@ export const registerRetailer = async (req, res) => {
       partnerNameA, partnerNameB, phone, whatsappNo, alternateContactName, alternateContactPhone,
       areaOfOperation, pinCode, state, gstNumber, bankName, ifscCode, bankBranch,
       accountHolderName, accountNo, retailShopName, completeAddress, landmark, policeStation,
-      addressPinCode, addressState, photo
+      addressPinCode, addressState, photo, businessDocumentType, businessDocumentPhoto
     } = req.body;
 
     // Validation
@@ -33,6 +33,7 @@ export const registerRetailer = async (req, res) => {
 
     // Upload photo if provided
     let photoUrl = '';
+    let docPhotoUrl = '';
 
     // Support Base64 image
     if (photo && photo.startsWith('data:image')) {
@@ -41,10 +42,22 @@ export const registerRetailer = async (req, res) => {
         const buffer = Buffer.from(base64Data, 'base64');
         photoUrl = await processAndSaveImage(buffer, 'users');
       } catch (err) {
-        console.error('Local upload error during signup:', err);
+        console.error('Local upload error during signup (photo):', err);
       }
     } else if (photo) {
       photoUrl = photo; // already a URL
+    }
+
+    if (businessDocumentPhoto && businessDocumentPhoto.startsWith('data:image')) {
+      try {
+        const base64Data = businessDocumentPhoto.replace(/^data:image\/\w+;base64,/, "");
+        const buffer = Buffer.from(base64Data, 'base64');
+        docPhotoUrl = await processAndSaveImage(buffer, 'users');
+      } catch (err) {
+        console.error('Local upload error during signup (document):', err);
+      }
+    } else if (businessDocumentPhoto) {
+      docPhotoUrl = businessDocumentPhoto;
     }
 
     // Create retailer
@@ -87,7 +100,9 @@ export const registerRetailer = async (req, res) => {
       policeStation: policeStation || '',
       addressPinCode: addressPinCode || '',
       addressState: addressState || '',
-      photo: photoUrl
+      photo: photoUrl,
+      businessDocumentType: businessDocumentType || '',
+      businessDocumentPhoto: docPhotoUrl
     });
 
     if (retailer) {
@@ -127,6 +142,8 @@ export const registerRetailer = async (req, res) => {
         addressPinCode: retailer.addressPinCode,
         addressState: retailer.addressState,
         photo: retailer.photo,
+        businessDocumentType: retailer.businessDocumentType,
+        businessDocumentPhoto: retailer.businessDocumentPhoto,
         message: 'Retailer registered successfully'
       });
     } else {
@@ -293,7 +310,7 @@ export const createAdminRetailer = async (req, res) => {
       partnerNameA, partnerNameB, whatsappNo, alternateContactName, alternateContactPhone,
       areaOfOperation, pinCode, state, bankName, ifscCode, bankBranch,
       accountHolderName, accountNo, retailShopName, completeAddress, landmark, policeStation,
-      addressPinCode, addressState, photo
+      addressPinCode, addressState, photo, businessDocumentType, businessDocumentPhoto
     } = req.body;
 
     // Validation
@@ -324,6 +341,7 @@ export const createAdminRetailer = async (req, res) => {
 
     // Upload photo if provided
     let photoUrl = '';
+    let docPhotoUrl = '';
 
     if (photo && photo.startsWith('data:image')) {
       try {
@@ -331,10 +349,22 @@ export const createAdminRetailer = async (req, res) => {
         const buffer = Buffer.from(base64Data, 'base64');
         photoUrl = await processAndSaveImage(buffer, 'users');
       } catch (err) {
-        console.error('Local upload error:', err);
+        console.error('Local upload error for photo:', err);
       }
     } else if (photo) {
       photoUrl = photo; // already a URL
+    }
+
+    if (businessDocumentPhoto && businessDocumentPhoto.startsWith('data:image')) {
+      try {
+        const base64Data = businessDocumentPhoto.replace(/^data:image\/\w+;base64,/, "");
+        const buffer = Buffer.from(base64Data, 'base64');
+        docPhotoUrl = await processAndSaveImage(buffer, 'users');
+      } catch (err) {
+        console.error('Local upload error for document:', err);
+      }
+    } else if (businessDocumentPhoto) {
+      docPhotoUrl = businessDocumentPhoto;
     }
 
     // Create retailer
@@ -377,7 +407,9 @@ export const createAdminRetailer = async (req, res) => {
       policeStation: policeStation || '',
       addressPinCode: addressPinCode || '',
       addressState: addressState || '',
-      photo: photoUrl
+      photo: photoUrl,
+      businessDocumentType: businessDocumentType || '',
+      businessDocumentPhoto: docPhotoUrl
     });
 
     res.status(201).json(retailer);
@@ -396,7 +428,7 @@ export const updateAdminRetailer = async (req, res) => {
       partnerNameA, partnerNameB, whatsappNo, alternateContactName, alternateContactPhone,
       areaOfOperation, pinCode, state, bankName, ifscCode, bankBranch,
       accountHolderName, accountNo, retailShopName, completeAddress, landmark, policeStation,
-      addressPinCode, addressState, photo
+      addressPinCode, addressState, photo, businessDocumentType, businessDocumentPhoto
     } = req.body;
 
     // Find retailer
@@ -439,10 +471,23 @@ export const updateAdminRetailer = async (req, res) => {
         const buffer = Buffer.from(base64Data, 'base64');
         photoUrl = await processAndSaveImage(buffer, 'users');
       } catch (err) {
-        console.error('Local upload error during update:', err);
+        console.error('Local upload error during update (photo):', err);
       }
     } else if (photo) {
       photoUrl = photo; // already a URL
+    }
+
+    let docPhotoUrl = retailer.businessDocumentPhoto || '';
+    if (businessDocumentPhoto && businessDocumentPhoto.startsWith('data:image')) {
+      try {
+        const base64Data = businessDocumentPhoto.replace(/^data:image\/\w+;base64,/, "");
+        const buffer = Buffer.from(base64Data, 'base64');
+        docPhotoUrl = await processAndSaveImage(buffer, 'users');
+      } catch (err) {
+        console.error('Local upload error during update (document):', err);
+      }
+    } else if (businessDocumentPhoto) {
+      docPhotoUrl = businessDocumentPhoto;
     }
 
     // Update fields
@@ -490,6 +535,8 @@ export const updateAdminRetailer = async (req, res) => {
     if (policeStation !== undefined) retailer.policeStation = policeStation;
     if (addressPinCode !== undefined) retailer.addressPinCode = addressPinCode;
     if (addressState !== undefined) retailer.addressState = addressState;
+    if (businessDocumentType !== undefined) retailer.businessDocumentType = businessDocumentType;
+    retailer.businessDocumentPhoto = docPhotoUrl;
     retailer.photo = photoUrl;
 
     const updatedRetailer = await retailer.save();

@@ -95,6 +95,8 @@ const retailerSchema = new mongoose.Schema({
   // Form fields added
   shopName: { type: String, default: '' },
   shopType: { type: String, default: '' },
+  businessDocumentType: { type: String, default: '' },
+  businessDocumentPhoto: { type: String, default: '' },
   addressAsPerAadhaar: { type: String, default: '' },
   aadhaarState: { type: String, default: '' },
   aadhaarPin: { type: String, default: '' },

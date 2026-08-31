@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Navigate, useParams, useSearchParams } from 'react-router-dom'
 import { adminModuleContent } from '../../data/adminModules'
 import AdminDealManagement from '../../components/AdminDealManagement'
+import { Printer, Camera, UploadCloud, Image as ImageIcon } from 'lucide-react'
 
 function getStatusBadgeClasses(status) {
   if (status === 'Active') {
@@ -2555,350 +2556,148 @@ function AdminModulePage() {
               {modalError}
             </div>
           )}
-          <div className="grid gap-3 sm:grid-cols-2 max-h-[70vh] overflow-y-auto px-1">
-            {/* Group 1: General Details */}
-            <div className="col-span-1 sm:col-span-2 border-b border-slate-200 pb-1 mt-2 mb-1">
-              <h4 className="text-xs font-bold text-[#00a877] uppercase tracking-wider">1. General Shop Details</h4>
-            </div>
-            <Field label="Store / Shop Name">
+          <div className="grid gap-4 sm:grid-cols-2 max-h-[70vh] overflow-y-auto px-1 pb-4">
+            <Field label="Name">
               <input
-                value={isReadOnly ? (retailerForm.shopName || retailerForm.storeName || 'N/A') : retailerForm.shopName}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, shopName: e.target.value, storeName: e.target.value }))}
+                value={isReadOnly ? (retailerForm.name || 'N/A') : retailerForm.name}
+                onChange={(e) => setRetailerForm((prev) => ({ ...prev, name: e.target.value, ownerName: e.target.value }))}
                 readOnly={isReadOnly}
                 className={baseInputClass(isReadOnly)}
-                placeholder="Enter shop name"
+                placeholder="E.g. Mohan Kumar"
                 required
               />
             </Field>
-            <Field label="Store Owner Name">
-              <input
-                value={isReadOnly ? (retailerForm.ownerName || retailerForm.name || 'N/A') : retailerForm.ownerName}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, ownerName: e.target.value, name: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Enter owner name"
-                required
-              />
-            </Field>
-            <Field label="Shop Type">
-              <select
-                value={retailerForm.shopType || 'Proprietorship'}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, shopType: e.target.value }))}
-                disabled={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-              >
-                <option value="Proprietorship">Proprietorship</option>
-                <option value="Partnership">Partnership</option>
-              </select>
-            </Field>
 
-            {/* Group 2: Aadhaar Identity */}
-            <div className="col-span-1 sm:col-span-2 border-b border-slate-200 pb-1 mt-4 mb-1">
-              <h4 className="text-xs font-bold text-[#00a877] uppercase tracking-wider">2. Aadhaar Verification</h4>
-            </div>
-            <Field label="Aadhaar No.">
-              <input
-                value={isReadOnly ? (retailerForm.aadhaarNo || 'N/A') : retailerForm.aadhaarNo}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, aadhaarNo: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Enter 12 digit Aadhaar"
-              />
-            </Field>
-            <Field label="Aadhaar Address">
-              <input
-                value={isReadOnly ? (retailerForm.addressAsPerAadhaar || 'N/A') : retailerForm.addressAsPerAadhaar}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, addressAsPerAadhaar: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Enter address as per Aadhaar"
-              />
-            </Field>
-            <Field label="Aadhaar State">
-              <input
-                value={isReadOnly ? (retailerForm.aadhaarState || 'N/A') : retailerForm.aadhaarState}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, aadhaarState: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="State as per Aadhaar"
-              />
-            </Field>
-            <Field label="Aadhaar Pin">
-              <input
-                value={isReadOnly ? (retailerForm.aadhaarPin || 'N/A') : retailerForm.aadhaarPin}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, aadhaarPin: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Pin code as per Aadhaar"
-              />
-            </Field>
-
-            {/* Group 3: Identity & Tax */}
-            <div className="col-span-1 sm:col-span-2 border-b border-slate-200 pb-1 mt-4 mb-1">
-              <h4 className="text-xs font-bold text-[#00a877] uppercase tracking-wider">3. Tax & Identity</h4>
-            </div>
-            <Field label="PAN No.">
-              <input
-                value={isReadOnly ? (retailerForm.panNo || 'N/A') : retailerForm.panNo}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, panNo: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Enter PAN Number"
-              />
-            </Field>
-            <Field label="GST No.">
-              <input
-                value={isReadOnly ? (retailerForm.gstNumber || 'N/A') : retailerForm.gstNumber}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, gstNumber: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Enter GST Number"
-              />
-            </Field>
-            <Field label="Partner 1 Name">
-              <input
-                value={isReadOnly ? (retailerForm.partnerNameA || 'N/A') : retailerForm.partnerNameA}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, partnerNameA: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Partner Name (if applicable)"
-              />
-            </Field>
-            <Field label="Partner 2 Name">
-              <input
-                value={isReadOnly ? (retailerForm.partnerNameB || 'N/A') : retailerForm.partnerNameB}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, partnerNameB: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Other Partner Name (if applicable)"
-              />
-            </Field>
-
-            {/* Group 4: Contact Information */}
-            <div className="col-span-1 sm:col-span-2 border-b border-slate-200 pb-1 mt-4 mb-1">
-              <h4 className="text-xs font-bold text-[#00a877] uppercase tracking-wider">4. Contact Information</h4>
-            </div>
-            <Field label="Official Phone Number">
-              <input
-                value={isReadOnly ? (retailerForm.phone || 'N/A') : retailerForm.phone}
-                onChange={(e) => {
-                  const val = e.target.value.replace(/\D/g, '').slice(0, 10)
-                  setRetailerForm((prev) => ({ ...prev, phone: val }))
-                }}
-                maxLength={10}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Official mobile number"
-                required
-              />
-            </Field>
-            <Field label="Email Address">
+            <Field label="Email">
               <input
                 type="email"
                 value={retailerForm.email}
                 onChange={(e) => setRetailerForm((prev) => ({ ...prev, email: e.target.value }))}
                 readOnly={isReadOnly}
                 className={baseInputClass(isReadOnly)}
-                placeholder="Official email address"
+                placeholder="E.g. mohan@example.com"
                 required
               />
             </Field>
-            <Field label="WhatsApp No.">
-              <input
-                value={isReadOnly ? (retailerForm.whatsappNo || 'N/A') : retailerForm.whatsappNo}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, whatsappNo: e.target.value.replace(/\D/g, '').slice(0, 10) }))}
-                maxLength={10}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="WhatsApp Number"
-              />
-            </Field>
-            <Field label="Alternate Contact Name">
-              <input
-                value={isReadOnly ? (retailerForm.alternateContactName || 'N/A') : retailerForm.alternateContactName}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, alternateContactName: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Alternate contact person"
-              />
-            </Field>
-            <Field label="Alternate Contact Phone">
-              <input
-                value={isReadOnly ? (retailerForm.alternateContactPhone || 'N/A') : retailerForm.alternateContactPhone}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, alternateContactPhone: e.target.value.replace(/\D/g, '').slice(0, 10) }))}
-                maxLength={10}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Alternate mobile number"
-              />
-            </Field>
 
-            {/* Group 5: Operation Area */}
-            <div className="col-span-1 sm:col-span-2 border-b border-slate-200 pb-1 mt-4 mb-1">
-              <h4 className="text-xs font-bold text-[#00a877] uppercase tracking-wider">5. Operation Area</h4>
-            </div>
-            <Field label="Area of Operation">
-              <input
-                value={isReadOnly ? (retailerForm.areaOfOperation || 'N/A') : retailerForm.areaOfOperation}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, areaOfOperation: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Area of business operation"
-              />
-            </Field>
-            <Field label="Pin Code">
-              <input
-                value={isReadOnly ? (retailerForm.pinCode || 'N/A') : retailerForm.pinCode}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, pinCode: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Operation area pin code"
-              />
-            </Field>
-            <Field label="State">
-              <input
-                value={isReadOnly ? (retailerForm.state || 'N/A') : retailerForm.state}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, state: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Operation state"
-              />
-            </Field>
-
-            {/* Group 6: Complete Shop Address */}
-            <div className="col-span-1 sm:col-span-2 border-b border-slate-200 pb-1 mt-4 mb-1">
-              <h4 className="text-xs font-bold text-[#00a877] uppercase tracking-wider">6. Complete Shop Location Details</h4>
-            </div>
-            <Field label="Retail Shop Name">
-              <input
-                value={isReadOnly ? (retailerForm.retailShopName || retailerForm.shopName || retailerForm.storeName || 'N/A') : retailerForm.retailShopName}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, retailShopName: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Retail shop display name"
-              />
-            </Field>
-            <Field label="Complete Delivery Address">
-              <input
-                value={isReadOnly ? (retailerForm.completeAddress || retailerForm.address || 'N/A') : retailerForm.completeAddress}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, completeAddress: e.target.value, address: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Complete physical shop address"
-              />
-            </Field>
-            <Field label="City">
-              <input
-                value={isReadOnly ? (retailerForm.city || 'N/A') : retailerForm.city}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, city: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="City Name"
-              />
-            </Field>
-            <Field label="Land Mark">
-              <input
-                value={isReadOnly ? (retailerForm.landmark || 'N/A') : retailerForm.landmark}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, landmark: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Nearby landmark"
-              />
-            </Field>
-            <Field label="Police Station (P.S.)">
-              <input
-                value={isReadOnly ? (retailerForm.policeStation || 'N/A') : retailerForm.policeStation}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, policeStation: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Nearest Police Station"
-              />
-            </Field>
-            <Field label="Address Pin Code">
-              <input
-                value={isReadOnly ? (retailerForm.addressPinCode || 'N/A') : retailerForm.addressPinCode}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, addressPinCode: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Shop address Pin Code"
-              />
-            </Field>
-            <Field label="Address State">
-              <input
-                value={isReadOnly ? (retailerForm.addressState || 'N/A') : retailerForm.addressState}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, addressState: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Shop address State"
-              />
-            </Field>
-
-            {/* Group 7: Bank Details */}
-            <div className="col-span-1 sm:col-span-2 border-b border-slate-200 pb-1 mt-4 mb-1">
-              <h4 className="text-xs font-bold text-[#00a877] uppercase tracking-wider">7. Bank Account Details</h4>
-            </div>
-            <Field label="Bank Name">
-              <input
-                value={isReadOnly ? (retailerForm.bankName || 'N/A') : retailerForm.bankName}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, bankName: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Enter bank name"
-              />
-            </Field>
-            <Field label="IFSC Code">
-              <input
-                value={isReadOnly ? (retailerForm.ifscCode || 'N/A') : retailerForm.ifscCode}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, ifscCode: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Enter Bank IFSC Code"
-              />
-            </Field>
-            <Field label="Bank Branch">
-              <input
-                value={isReadOnly ? (retailerForm.bankBranch || 'N/A') : retailerForm.bankBranch}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, bankBranch: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Enter branch name"
-              />
-            </Field>
-            <Field label="Account Holder Name">
-              <input
-                value={isReadOnly ? (retailerForm.accountHolderName || 'N/A') : retailerForm.accountHolderName}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, accountHolderName: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Account Holder's Name"
-              />
-            </Field>
-            <Field label="Bank Account No.">
-              <input
-                value={isReadOnly ? (retailerForm.accountNo || 'N/A') : retailerForm.accountNo}
-                onChange={(e) => setRetailerForm((prev) => ({ ...prev, accountNo: e.target.value }))}
-                readOnly={isReadOnly}
-                className={baseInputClass(isReadOnly)}
-                placeholder="Enter bank account number"
-              />
-            </Field>
-
-            {/* Group 8: System Settings */}
-            <div className="col-span-1 sm:col-span-2 border-b border-slate-200 pb-1 mt-4 mb-1">
-              <h4 className="text-xs font-bold text-[#00a877] uppercase tracking-wider">8. System Settings & Documents</h4>
-            </div>
-            {!isReadOnly && (
-              <Field label="Account Password">
+            {!isReadOnly && modalMode === 'add' && (
+              <Field label="Password">
                 <input
                   type="password"
                   value={retailerForm.password || ''}
                   onChange={(e) => setRetailerForm((prev) => ({ ...prev, password: e.target.value }))}
                   className={baseInputClass(isReadOnly)}
-                  required={modalMode === 'add'}
-                  placeholder="Enter password"
+                  required
+                  placeholder="Enter password (min 6 characters)"
                 />
               </Field>
             )}
+
+            <Field label="Store Name">
+              <input
+                value={isReadOnly ? (retailerForm.shopName || retailerForm.storeName || 'N/A') : retailerForm.shopName}
+                onChange={(e) => setRetailerForm((prev) => ({ ...prev, shopName: e.target.value, storeName: e.target.value }))}
+                readOnly={isReadOnly}
+                className={baseInputClass(isReadOnly)}
+                placeholder="E.g. Mohan General Store"
+                required
+              />
+            </Field>
+
+            <Field label="What type of store do you run?">
+              <select
+                value={retailerForm.shopType || ''}
+                onChange={(e) => setRetailerForm((prev) => ({ ...prev, shopType: e.target.value }))}
+                disabled={isReadOnly}
+                className={baseInputClass(isReadOnly)}
+              >
+                <option value="">Select Business</option>
+                <option value="Proprietorship">Proprietorship</option>
+                <option value="Partnership">Partnership</option>
+                <option value="Private Limited">Private Limited</option>
+                <option value="Other">Other</option>
+              </select>
+            </Field>
+
+            <Field label="Business Document Type">
+              <select
+                value={retailerForm.businessDocumentType || ''}
+                onChange={(e) => setRetailerForm((prev) => ({ ...prev, businessDocumentType: e.target.value }))}
+                disabled={isReadOnly}
+                className={baseInputClass(isReadOnly)}
+              >
+                <option value="">Select Document</option>
+                <option value="GST Certificate">GST Certificate</option>
+                <option value="Trade License">Trade License</option>
+                <option value="FSSAI License">FSSAI License</option>
+                <option value="Shop Act License">Shop Act License</option>
+              </select>
+            </Field>
+
+            <Field label="Upload Document">
+              {retailerForm.businessDocumentPhoto && (
+                <div className="mb-2 relative w-32 h-32 rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-slate-50">
+                  <img src={retailerForm.businessDocumentPhoto instanceof File ? URL.createObjectURL(retailerForm.businessDocumentPhoto) : retailerForm.businessDocumentPhoto?.startsWith('data:image') ? retailerForm.businessDocumentPhoto : getImageUrl(retailerForm.businessDocumentPhoto)} alt="Business Document" className="w-full h-full object-cover" />
+                  {!isReadOnly && (
+                    <button
+                      type="button"
+                      onClick={() => setRetailerForm(prev => ({ ...prev, businessDocumentPhoto: '' }))}
+                      className="absolute top-0 right-0 bg-red-500 hover:bg-red-600 text-white rounded-bl-lg p-1.5 text-xs transition duration-150"
+                      title="Remove image"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              )}
+              {!isReadOnly && !retailerForm.businessDocumentPhoto && (
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (window.flutter_inappwebview) {
+                        try {
+                          const response = await window.flutter_inappwebview.callHandler('openCamera');
+                          if (response && response.success && response.base64) {
+                            const mimeType = response.mimeType || 'image/jpeg';
+                            setRetailerForm(prev => ({ ...prev, businessDocumentPhoto: `data:${mimeType};base64,${response.base64}` }));
+                          }
+                        } catch (err) {
+                          alert('Failed to open camera: ' + err.message);
+                        }
+                      } else {
+                        alert('Camera feature is only available in the app.');
+                      }
+                    }}
+                    className="flex-1 flex items-center justify-center gap-2 border border-[#00a877] text-[#00a877] hover:bg-emerald-50 rounded-xl px-3 py-2 text-sm font-medium transition"
+                  >
+                    <Camera size={16} /> Take Photo
+                  </button>
+                  <label className="flex-1 flex items-center justify-center gap-2 border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-xl px-3 py-2 text-sm font-medium transition cursor-pointer">
+                    <UploadCloud size={16} /> From Gallery
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            setRetailerForm(prev => ({ ...prev, businessDocumentPhoto: reader.result }));
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+              )}
+            </Field>
+
+
+
+
             <Field label="Wallet Balance">
               <input
                 value={isReadOnly ? (retailerForm.walletBalance || 'Rs 0') : (retailerForm.walletBalance === 'Rs 0' ? '' : retailerForm.walletBalance)}
@@ -2921,12 +2720,10 @@ function AdminModulePage() {
               </select>
             </Field>
 
-            {/* Photo Upload with preview */}
-            {/* Photo Upload with preview */}
             <Field label="Retailer Photo">
               {retailerForm.photo && (
                 <div className="mb-2 relative w-32 h-32 rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-slate-50">
-                  <img src={retailerForm.photo instanceof File ? URL.createObjectURL(retailerForm.photo) : retailerForm.photo?.startsWith('data:image') ? retailerForm.photo : getImageUrl(retailerForm.photo)} alt="Retailer Document" className="w-full h-full object-cover" />
+                  <img src={retailerForm.photo instanceof File ? URL.createObjectURL(retailerForm.photo) : retailerForm.photo?.startsWith('data:image') ? retailerForm.photo : getImageUrl(retailerForm.photo)} alt="Retailer Photo" className="w-full h-full object-cover" />
                   {!isReadOnly && (
                     <button
                       type="button"
@@ -2948,46 +2745,38 @@ function AdminModulePage() {
                         try {
                           const response = await window.flutter_inappwebview.callHandler('openCamera');
                           if (response && response.success && response.base64) {
-                             const mimeType = response.mimeType || 'image/jpeg';
-                             const bstr = atob(response.base64);
-                             let n = bstr.length;
-                             const u8arr = new Uint8Array(n);
-                             while(n--){ u8arr[n] = bstr.charCodeAt(n); }
-                             const file = new File([u8arr], response.fileName || 'retailer_camera.jpg', {type:mimeType});
-                             setRetailerForm(prev => ({ ...prev, photo: file }));
+                            const mimeType = response.mimeType || 'image/jpeg';
+                            setRetailerForm(prev => ({ ...prev, photo: `data:${mimeType};base64,${response.base64}` }));
                           }
-                        } catch(err) {
+                        } catch (err) {
                           alert('Failed to open camera: ' + err.message);
                         }
                       } else {
-                        alert('Camera feature is only available in the Umeed App.');
+                        alert('Camera feature is only available in the app.');
                       }
                     }}
-                    className="flex-1 flex items-center justify-center gap-2 p-3 border border-black rounded-xl bg-black text-white text-xs font-bold hover:bg-slate-800 transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 border border-[#00a877] text-[#00a877] hover:bg-emerald-50 rounded-xl px-3 py-2 text-sm font-medium transition"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-                    Take Photo
+                    <Camera size={16} /> Take Photo
                   </button>
-                  <div className="relative flex-1">
+                  <label className="flex-1 flex items-center justify-center gap-2 border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-xl px-3 py-2 text-sm font-medium transition cursor-pointer">
+                    <UploadCloud size={16} /> From Gallery
                     <input
                       type="file"
                       accept="image/*"
+                      className="hidden"
                       onChange={(e) => {
                         const file = e.target.files?.[0];
                         if (file) {
-                          setRetailerForm(prev => ({ ...prev, photo: file }));
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            setRetailerForm(prev => ({ ...prev, photo: reader.result }));
+                          };
+                          reader.readAsDataURL(file);
                         }
                       }}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                     />
-                    <button
-                      type="button"
-                      className="w-full flex items-center justify-center gap-2 p-3 border border-slate-300 rounded-xl bg-white text-slate-700 text-xs font-bold hover:bg-slate-50 transition-colors pointer-events-none"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                      From Gallery
-                    </button>
-                  </div>
+                  </label>
                 </div>
               )}
             </Field>
@@ -3851,13 +3640,28 @@ function AdminModulePage() {
                     Placed on {selectedOrder.createdAt ? new Date(selectedOrder.createdAt).toLocaleString('en-IN') : 'N/A'}
                   </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setSelectedOrder(null)}
-                  className="rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition"
-                >
-                  Close
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => window.open(`/invoice/${selectedOrder._id}`, '_blank')}
+                    className="flex items-center gap-1.5 rounded-xl bg-[#00a877] px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-emerald-600 active:scale-95 transition"
+                  >
+                    <Printer size={14} />
+                    Print Invoice
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log('Close button clicked');
+                      setSelectedOrder(null);
+                    }}
+                    className="rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
 
               {/* Grid with Shop & Order status info */}
