@@ -94,17 +94,10 @@ function OrderDetail() {
         
         <button
           onClick={() => window.open(`/invoice/${order._id}`, '_blank')}
-          className="hidden sm:flex px-4 py-2 bg-[#00a877] text-white rounded-xl text-sm font-bold shadow-md hover:bg-emerald-600 active:scale-95 transition-all items-center gap-2"
+          className="flex px-3 py-2 sm:px-4 sm:py-2 bg-[#00a877] text-white rounded-xl text-[10px] sm:text-sm font-bold shadow-md hover:bg-emerald-600 active:scale-95 transition-all items-center gap-1.5 sm:gap-2"
         >
           <Printer size={16} />
           Print / Download Bill
-        </button>
-        {/* Mobile icon only */}
-        <button
-          onClick={() => window.open(`/invoice/${order._id}`, '_blank')}
-          className="sm:hidden h-12 w-12 grid place-items-center bg-[#00a877] text-white rounded-2xl shadow-sm active:scale-95 transition-all"
-        >
-          <Printer size={20} />
         </button>
       </header>
 
@@ -185,6 +178,17 @@ function OrderDetail() {
             <div className="flex items-center justify-between">
               <span className="text-xs text-slate-500 font-medium">Transaction ID</span>
               <span className="text-xs font-bold text-[#0F172A]">{order.transactionId}</span>
+            </div>
+          )}
+          {order.needBill !== undefined && (
+            <div className="flex items-center justify-between mt-1 pt-3 border-t border-slate-50">
+              <div className="flex items-center gap-2">
+                <Printer size={14} className="text-slate-400" />
+                <span className="text-xs text-slate-500 font-medium">Need Bill</span>
+              </div>
+              <span className={`text-xs font-bold px-2 py-1 rounded-md ${order.needBill ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-50 text-slate-500'}`}>
+                {order.needBill ? 'Yes' : 'No'}
+              </span>
             </div>
           )}
         </div>

@@ -62,7 +62,7 @@ function Signup() {
 
       const contentType = response.headers.get("content-type");
       let data;
-      
+
       if (contentType && contentType.includes("application/json")) {
         data = await response.json();
       } else {
@@ -133,7 +133,7 @@ function Signup() {
         </button>
         <h1 className="ml-4 text-xl font-bold text-slate-800">Set up your store profile</h1>
       </header>
-      
+
       <div className="px-5 pt-6 pb-12">
         <p className="text-sm text-slate-500 mb-8 text-center max-w-xs mx-auto">
           We'll use this to verify and activate your account
@@ -146,7 +146,7 @@ function Signup() {
         )}
 
         <form className="space-y-5" onSubmit={handleSubmit}>
-          
+
           <div>
             <label htmlFor="name" className="mb-2 block text-sm font-medium text-slate-600">
               Name
@@ -227,7 +227,7 @@ function Signup() {
               </select>
               <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
             </div>
@@ -253,7 +253,7 @@ function Signup() {
               </select>
               <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
             </div>
@@ -342,7 +342,7 @@ function Signup() {
               {submitting ? 'Creating account...' : 'Continue'}
             </button>
           </div>
-          
+
         </form>
       </div>
     </div>
